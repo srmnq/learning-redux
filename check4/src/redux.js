@@ -3,7 +3,8 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 const initialState = {
-  posts: []
+  posts: [],
+  showAll: true
 }
 
 //reducers
