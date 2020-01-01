@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchPosts, toggleTodo } from '../redux'
+import { fetchPosts, toggleTodo, showAll, search } from '../redux'
 
 export default function Posts() {
   const posts = useSelector(state => state.posts)
   const dispatch = useDispatch()
-  const [showAll, setShowAll] = useState(true)
-  const [searchInput, setSearchInput] = useState('')
+  const searchInput = useSelector(state => state.searchInput)
+  const allShown = useSelector(state => state.showAll)
 
   useEffect(() => {
     dispatch(fetchPosts())
@@ -14,12 +14,12 @@ export default function Posts() {
 
   return (
     <div>
-      <input type="text" onChange={e => setSearchInput(e.target.value)}></input>
-      <button onClick={() => setShowAll(!showAll)}>
-        {showAll ? 'show completed todos' : 'show all'}
+      <input type="text" onChange={e => dispatch(search(e))}></input>
+      <button onClick={() => dispatch(showAll())}>
+        {allShown ? 'show completed todos' : 'show all'}
       </button>
 
-      {showAll
+      {allShown
         ? posts
             .filter(post => post.title.includes(searchInput))
             .map(post => (

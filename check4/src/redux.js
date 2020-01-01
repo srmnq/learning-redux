@@ -4,7 +4,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 const initialState = {
   posts: [],
-  showAll: true
+  showAll: true,
+  searchInput: ''
 }
 
 //reducers
@@ -19,6 +20,17 @@ const reducer = (state, { type, payload }) => {
         posts: state.posts.map(todo =>
           todo.id === payload ? { ...todo, completed: !todo.completed } : todo
         )
+      }
+
+    case 'SHOW_ALL':
+      return {
+        ...state,
+        showAll: !state.showAll
+      }
+    case 'SEARCH_INPUT':
+      return {
+        ...state,
+        searchInput: payload
       }
 
     default:
@@ -43,4 +55,12 @@ export const fetchPosts = () => dispatch => {
 export const toggleTodo = id => ({
   type: 'TOGGLE_TODO',
   payload: id
+})
+
+export const showAll = () => ({
+  type: 'SHOW_ALL'
+})
+export const search = e => ({
+  type: 'SEARCH_INPUT',
+  payload: e.target.value
 })
