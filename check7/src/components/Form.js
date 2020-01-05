@@ -1,9 +1,11 @@
 import React from 'react'
 import { saveForm } from '../redux/redux'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { sort, toggleIncludeA } from '../redux/redux'
 
 export default function Form() {
   const dispatch = useDispatch()
+  const form = useSelector(state => state.form)
 
   return (
     <form className="form">
@@ -21,11 +23,22 @@ export default function Form() {
         name="id"
         type="number"
       ></input>
-      <label htmlFor="name">show only completed</label>
-      <select onChange={e => dispatch(saveForm(e))}>
-        <option>yes</option>
+      <label htmlFor="completed">show only completed</label>
+      <select name="completed" onChange={e => dispatch(saveForm(e))}>
+        <option>Yes</option>
         <option>No</option>
       </select>
+      {/* <label name="include">includes letter</label> */}
+      <label>a</label>
+      <input
+        onClick={() => dispatch(toggleIncludeA())}
+        name="include"
+        type="checkbox"
+        checked={form.include && 'checked'}
+      ></input>
+      <label>b</label>
+      <input name="include" type="checkbox" value="b"></input>
+      <button onClick={e => dispatch(sort(e))}>Sort alphabetical</button>
     </form>
   )
 }

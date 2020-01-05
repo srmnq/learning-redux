@@ -31,3 +31,14 @@ export const saveForm = e => {
     payload: data
   }
 }
+export const toggleTodo = id => {
+  return { type: 'TOGGLE_TODO', payload: id }
+}
+
+export const sort = e => {
+  e.preventDefault()
+  return { type: 'SORT' }
+}
+export const toggleIncludeA = () => {
+  return { type: 'INCLUDE_A' }
+}

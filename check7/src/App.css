@@ -5,8 +5,30 @@
 .form {
   display: grid;
   align-content: flex-start;
+  margin: 24px;
 }
 
 .posts {
-  margin-left: 24px;
+  margin: 24px;
+  border: 2px solid #bbb;
+  border-radius: 2px;
+  padding: 8px;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.btn {
+  background: #0081d5;
+  color: #eee;
+  border: none;
+  width: 200px;
+  height: 2rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.weiter-link {
+  align-self: end;
 }
