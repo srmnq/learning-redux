@@ -1,7 +1,9 @@
 const initialstate = {
   posts: [],
   form: { name: '', id: '', completed: 'Yes', include: true },
-  sort: false
+  sort: false,
+  loading: false,
+  error: null
 }
 
 export const reducer = (state = initialstate, { type, payload }) => {
@@ -20,6 +22,27 @@ export const reducer = (state = initialstate, { type, payload }) => {
         posts: state.posts.map(post =>
           post.id === payload ? { ...post, completed: !post.completed } : post
         )
+      }
+    case 'FETCH_PRODUCTS_BEGIN':
+      return {
+        ...state,
+        loading: true,
+        error: null
+      }
+
+    case 'FETCH_PRODUCTS_SUCCESS':
+      return {
+        ...state,
+        loading: false,
+        posts: payload.products
+      }
+
+    case 'FETCH_PRODUCTS_FAILURE':
+      return {
+        ...state,
+        loading: false,
+        error: payload.error,
+        posts: []
       }
 
     default:

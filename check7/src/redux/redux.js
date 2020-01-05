@@ -10,16 +10,42 @@ export const store = createStore(
 
 //action
 
-export const fetchPosts = () => dispatch => {
-  fetch('https://jsonplaceholder.typicode.com/todos')
-    .then(res => res.json())
-    .then(data =>
-      dispatch({
-        type: 'FETCH_POSTS',
-        payload: data
+export const fetchProductsBegin = () => ({
+  type: 'FETCH_PRODUCTS_BEGIN'
+})
+
+export const fetchProductsSuccess = products => ({
+  type: 'FETCH_PRODUCTS_SUCCESS',
+  payload: { products }
+})
+
+export const fetchProductsFailure = error => ({
+  type: 'FETCH_PRODUCTS_FAILURE',
+  payload: { error }
+})
+
+export function fetchPosts() {
+  return dispatch => {
+    dispatch(fetchProductsBegin())
+    return fetch('https://jsonplaceholder.typicode.com/todos')
+      .then(res => res.json())
+      .then(data => {
+        dispatch(fetchProductsSuccess(data))
       })
-    )
+      .catch(error => dispatch(fetchProductsFailure(error)))
+  }
 }
+
+// export const fetchPosts = () => dispatch => {
+//   fetch('https://jsonplaceholder.typicode.com/todos')
+//     .then(res => res.json())
+//     .then(data =>
+//       dispatch({
+//         type: 'FETCH_POSTS',
+//         payload: data
+//       })
+//     )
+// }
 
 export const saveForm = e => {
   e.preventDefault()
